@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'lkjwklerjwlwkejrewlkrjjwerlwer'; // Change this to a strong random string
-const MONGODB_URI = 'mongodb+srv://adminuser89:dell2525@cluster0.klvydtn.mongodb.net/main'; // Replace this with your MongoDB Atlas URI
+const MONGODB_URI = 'Replace this with your MongoDB Atlas URI'; // Replace this with your MongoDB Atlas URI
 
 
 // Middleware to parse JSON bodies
