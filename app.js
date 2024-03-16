@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'lkjwklerjwlwkejrewlkrjjwerlwer'; // Change this to a strong random string
-const MONGODB_URI = 'Replace this with your MongoDB Atlas URI'; // Replace this with your MongoDB Atlas URI
+const MONGODB_URI = 'mongodb+srv://adminuser89:dell2525@cluster0.klvydtn.mongodb.net/main'; // Replace this with your MongoDB Atlas URI
 
 
 // Middleware to parse JSON bodies
@@ -163,7 +163,9 @@ app.put('/queries/:id/updateCountOfReplies', authenticateToken, async (req, res)
 
   try {
     // Update the count_of_replies field in the MongoDB document
-    const updatedQuery = await Query.findByIdAndUpdate(queryId, { count_of_replies: newCount }, { new: true });
+    const myQueryId = queryId;
+    const queryObjectId = mongoose.Types.ObjectId(myQueryId);
+    const updatedQuery = await Query.findByIdAndUpdate(queryObjectId, { count_of_replies: newCount }, { new: true });
 
     if (!updatedQuery) {
       return res.status(404).json({ error: 'Query not found' });
@@ -180,26 +182,26 @@ app.put('/queries/:id/updateCountOfReplies', authenticateToken, async (req, res)
 });
 
 // Define a function to update the count_of_replies field
-async function updateCountOfReplies(queryId, newCount) {
-  try {
-      // Find the document by its ID and update the count_of_replies field
-      const query = await QueryModel.findByIdAndUpdate(queryId, { count_of_replies: newCount }, { new: true });
+// async function updateCountOfReplies(queryId, newCount) {
+//   try {
+//       // Find the document by its ID and update the count_of_replies field
+//       const query = await Query.findByIdAndUpdate(queryId, { count_of_replies: newCount }, { new: true });
 
-      if (!query) {
-          console.log("Query not found!");
-          return; // Handle case where query document with given ID doesn't exist
-      }
+//       if (!query) {
+//           console.log("Query not found!");
+//           return; // Handle case where query document with given ID doesn't exist
+//       }
 
-      console.log("Count of replies updated successfully:", query);
+//       console.log("Count of replies updated successfully:", query);
 
-  } catch (error) {
-      console.error("Error updating count of replies:", error);
-      // Handle error
-  }
-}
+//   } catch (error) {
+//       console.error("Error updating count of replies:", error);
+//       // Handle error
+//   }
+// }
 
-// Call the function to update the count_of_replies field
-updateCountOfReplies('your_query_id_here', 10);
+// // Call the function to update the count_of_replies field
+// updateCountOfReplies('your_query_id_here', 10);
 
 // Define reply schema
 const replySchema = new mongoose.Schema({
